@@ -3,17 +3,24 @@ package com.study;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Server {
     private int port;
     private String webAppPath;
 
-    public Server() {
-
+    public void start(int port, String webAppPath) throws IOException {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            while (true) {
+                try (Socket socket = serverSocket.accept();
+                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+                    RequestHandler requestHandler = new RequestHandler(bufferedReader, bufferedWriter, webAppPath);
+                    requestHandler.handle();
+                }
+            }
+        }
     }
-
+/*
     public void setPort(int port) {
         this.port = port;
     }
@@ -83,5 +90,5 @@ public class Server {
                 }
             }
         }
-    }
+    }*/
 }
