@@ -1,8 +1,13 @@
 package com.study;
 
+import com.study.exceptions.BadRequestException;
+import com.study.exceptions.InternalServerErrorException;
+import com.study.exceptions.NotFoundException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Map;
 
 public class RequestHandler {
@@ -18,12 +23,20 @@ public class RequestHandler {
 
     public void handle() throws IOException {
         RequestParser requestParser = new RequestParser();
-        Request request = requestParser.parseRequest(reader);
+        ResponseWriter responseWriter = new ResponseWriter(writer);
 
-        System.out.println(request.getHttpMethod());
-        System.out.println(request.getUri());
-        for(Map.Entry entry  : request.getHeaders().entrySet()) {
-            System.out.println("Key = '" + entry.getKey() + "'; Value = '" + entry.getValue() + "'");
+        Request request;
+        try {
+            request = requestParser.parseRequest(reader);
+
+            ResourceReader resourceReader = new ResourceReader(webAppPath);
+            responseWriter.sendSuccessResponse(resourceReader.readContent(request.getUri()));
+        } catch (BadRequestException bre) {
+            responseWriter.sendBadRequestResponse();
+        } catch (NotFoundException nfe) {
+            responseWriter.sendNotFoundResponse();
+        } catch (InternalServerErrorException see) {
+            responseWriter.sendInternalServerErrorResponse();
         }
     }
 }

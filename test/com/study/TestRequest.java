@@ -1,5 +1,6 @@
 package com.study;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -8,9 +9,15 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 public class TestRequest {
+    private Request request;
+
+    @Before
+    public void before() {
+        request = new Request();
+    }
+
     @Test
     public void testRequest() {
-       Request request = new Request();
        request.setHttpMethod("GET");
        request.setUri("/index.html");
 
@@ -27,37 +34,31 @@ public class TestRequest {
 
     @Test
     public void testNullHttpMethod(){
-        Request request = new Request();
         request.setHttpMethod(null);
     }
 
     @Test
     public void testEmptyHttpMethod(){
-        Request request = new Request();
         request.setHttpMethod("");
     }
 
     @Test
     public void testNullUri(){
-        Request request = new Request();
         request.setUri(null);
     }
 
     @Test
     public void testEmptyUri(){
-        Request request = new Request();
         request.setUri("");
     }
 
     @Test
     public void testNullHeaders(){
-        Request request = new Request();
         request.setHeaders(null);
     }
 
     @Test
     public void testEmptyHeaders(){
-        Request request = new Request();
         Map<String, String> headers = new HashMap<>();
         request.setHeaders(headers);
     }

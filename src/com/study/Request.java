@@ -11,26 +11,14 @@ public class Request {
     }
 
     public void setUri(String uri) {
-        if (uri == null || uri.isEmpty()) {
-            throw new RequestException("Property 'uri' is empty!");
-        }
-
         this.uri = uri;
     }
 
     public void setHttpMethod(String httpMethod) {
-        if (httpMethod == null || httpMethod.isEmpty()) {
-            throw new RequestException("Property 'httpMethod' is empty!");
-        }
-
         this.httpMethod = httpMethod;
     }
 
     public void setHeaders(Map<String, String> headers) {
-        if (headers == null || headers.isEmpty()) {
-            throw new RequestException("Property 'headers' is empty!");
-        }
-
         this.headers = headers;
     }
 
