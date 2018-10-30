@@ -7,8 +7,6 @@ import com.study.exceptions.NotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Map;
 
 public class RequestHandler {
     private BufferedReader reader;
