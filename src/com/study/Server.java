@@ -5,9 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private int port;
-    private String webAppPath;
-
     public void start(int port, String webAppPath) throws IOException {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
